@@ -19,3 +19,5 @@ Content-Type: application/x-www-form-urlencoded
 name=TEST
 
 ###
+
+GET http://localhost:8880/test/list
