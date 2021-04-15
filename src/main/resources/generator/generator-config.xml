@@ -40,6 +40,8 @@
                              targetPackage="com.jiawa.wiki.mapper"
                              type="XMLMAPPER"/>
 
-        <table tableName="demo" domainObjectName="Demo"/>
+<!--        <table tableName="demo" domainObjectName="Demo"/>-->
+<!--        domainObjectName可省略-->
+        <table tableName="ebook"/>
     </context>
 </generatorConfiguration>
