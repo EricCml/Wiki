@@ -1,11 +1,15 @@
 package com.jiawa.wiki.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jiawa.wiki.domain.Ebook;
 import com.jiawa.wiki.domain.EbookExample;
 import com.jiawa.wiki.mapper.EbookMapper;
 import com.jiawa.wiki.req.EbookReq;
 import com.jiawa.wiki.resp.EbookResp;
 import com.jiawa.wiki.util.CopyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -14,6 +18,9 @@ import java.util.List;
 
 @Service
 public class EbookService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(EbookService.class);
+
     @Resource
     private EbookMapper ebookMapper;
 
@@ -23,7 +30,15 @@ public class EbookService {
         if (!ObjectUtils.isEmpty(req.getName())) {
             criteria.andNameLike("%" + req.getName() + "%");
         }
+
+        // 支持分页，且只对遇到的第一个select起作用
+        PageHelper.startPage(1, 3);
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
+
+        PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
+        // 写日志最好使用占位符{}，而不是用+拼接字符串
+        LOG.info("总行数：{}", pageInfo.getTotal());
+        LOG.info("总页数：{}", pageInfo.getPages());
 
 //        List<EbookResp> respList = new ArrayList<>();
 //        for (Ebook ebook : ebookList) {
