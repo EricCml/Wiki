@@ -7,6 +7,7 @@ import com.jiawa.wiki.domain.EbookExample;
 import com.jiawa.wiki.mapper.EbookMapper;
 import com.jiawa.wiki.req.EbookReq;
 import com.jiawa.wiki.resp.EbookResp;
+import com.jiawa.wiki.resp.PageResp;
 import com.jiawa.wiki.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<EbookResp> list(EbookReq req) {
+    public PageResp<EbookResp> list(EbookReq req) {
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if (!ObjectUtils.isEmpty(req.getName())) {
@@ -32,13 +33,12 @@ public class EbookService {
         }
 
         // 支持分页，且只对遇到的第一个select起作用
-        PageHelper.startPage(1, 3);
+        PageHelper.startPage(req.getPage(), req.getSize());
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
 
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
         // 写日志最好使用占位符{}，而不是用+拼接字符串
         LOG.info("总行数：{}", pageInfo.getTotal());
-        LOG.info("总页数：{}", pageInfo.getPages());
 
 //        List<EbookResp> respList = new ArrayList<>();
 //        for (Ebook ebook : ebookList) {
@@ -52,8 +52,12 @@ public class EbookService {
 //        }
 
         // 列表复制
-        List<EbookResp> respList1 = CopyUtil.copyList(ebookList, EbookResp.class);
+        List<EbookResp> respList = CopyUtil.copyList(ebookList, EbookResp.class);
 
-        return respList1;
+        PageResp<EbookResp> pageResp = new PageResp<>();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(respList);
+
+        return pageResp;
     }
 }
