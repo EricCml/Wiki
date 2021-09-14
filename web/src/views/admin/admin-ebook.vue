@@ -32,6 +32,9 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar"/>
         </template>
+        <template v-slot:category="{ text, record }">
+          <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
+        </template>
         <template v-slot:action="{ text, record }">
           <a-space size="small">
             <a-button type="primary" @click="edit(record)">
@@ -110,13 +113,8 @@ export default defineComponent({
         dataIndex: 'name'
       },
       {
-        title: '分类一',
-        key: 'category1Id',
-        dataIndex: 'category1Id'
-      },
-      {
-        title: '分类二',
-        dataIndex: 'category2Id'
+        title: '分类',
+        slots: {customRender: 'category'}
       },
       {
         title: '文档数',
@@ -234,6 +232,7 @@ export default defineComponent({
     };
 
     const level1 = ref();
+    let categorys: any;
     /**
      * 查询所有分类
      **/
@@ -243,7 +242,7 @@ export default defineComponent({
         loading.value = false;
         const data = response.data;
         if (data.success) {
-          const categorys = data.content;
+          categorys = data.content;
           console.log("原始数组：", categorys);
 
           level1.value = [];
@@ -253,6 +252,18 @@ export default defineComponent({
           message.error(data.message);
         }
       });
+    };
+
+    const getCategoryName = (cid: number) => {
+      // console.log(cid)
+      let result = "";
+      categorys.forEach((item: any) => {
+        if (item.id === cid) {
+          // return item.name; // 注意，这里直接return不起作用
+          result = item.name;
+        }
+      });
+      return result;
     };
 
     onMounted(() => {
@@ -271,6 +282,7 @@ export default defineComponent({
       loading,
       handleTableChange,
       handleQuery,
+      getCategoryName,
 
       edit,
       add,
