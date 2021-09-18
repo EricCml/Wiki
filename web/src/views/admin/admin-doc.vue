@@ -78,11 +78,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted, ref} from 'vue';
+import {defineComponent, onMounted, ref, createVNode} from 'vue';
 import axios from 'axios';
-import {message} from 'ant-design-vue';
+import {message, Modal} from 'ant-design-vue';
 import {Tool} from "@/util/tool";
 import {useRoute} from "vue-router";
+import ExclamationCircleOutlined from "@ant-design/icons-vue/ExclamationCircleOutlined";
 
 export default defineComponent({
   name: 'AdminDoc',
@@ -233,7 +234,8 @@ export default defineComponent({
       }
     };
 
-    const ids: Array<string> = [];
+    const deleteIds: Array<string> = [];
+    const deleteNames: Array<string> = [];
     /**
      * 查找整根树枝
      */
@@ -246,7 +248,8 @@ export default defineComponent({
           // 如果当前节点就是目标节点
           console.log("delete", node);
           // 将目标ID放入结果集ids
-          ids.push(id);
+          deleteIds.push(id);
+          deleteNames.push(node.name);
 
           // 遍历所有子节点
           const children = node.children;
@@ -302,14 +305,22 @@ export default defineComponent({
      */
     const handleDelete = (id: number) => {
       getDeleteIds(level1.value, id);
-      axios.delete("/doc/delete/" + ids.join(",")).then((reponse) => {
-        const data = reponse.data; // data = commonResp
-        if (data.success) {
-          // 重新加载列表
-          handleQuery();
-        }
-      })
-    }
+
+      Modal.confirm({
+        title: '重要提醒',
+        icon: createVNode(ExclamationCircleOutlined),
+        content: '将删除：【' + deleteNames.join("，") + "】删除后不可恢复，确认删除？",
+        onOk() {
+          axios.delete("/doc/delete/" + deleteIds.join(",")).then((reponse) => {
+            const data = reponse.data; // data = commonResp
+            if (data.success) {
+              // 重新加载列表
+              handleQuery();
+            }
+          });
+        },
+      });
+    };
 
     onMounted(() => {
       handleQuery();
