@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -35,6 +36,9 @@ public class DocService {
     @Resource
     private SnowFlake snowFlake;
 
+    /**
+     * 查询文档基本信息
+     */
     public List<DocQueryResp> all() {
         DocExample docExample = new DocExample();
         docExample.setOrderByClause("sort asc");
@@ -121,5 +125,20 @@ public class DocService {
         DocExample.Criteria criteria = docExample.createCriteria();
         criteria.andIdIn(ids);
         docMapper.deleteByExample(docExample);
+    }
+
+    /**
+     * 查询文档内容
+     */
+    public String findContent(@PathVariable Long id) {
+        Content content = contentMapper.selectByPrimaryKey(id);
+        String result;
+        if (!ObjectUtils.isEmpty(content)) {
+            result = content.getContent();
+        } else {
+            result = "";
+            LOG.error("id为 {} 的文档content为空！", id);
+        }
+        return result;
     }
 }
