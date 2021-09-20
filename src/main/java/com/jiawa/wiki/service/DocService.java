@@ -133,13 +133,11 @@ public class DocService {
      */
     public String findContent(@PathVariable Long id) {
         Content content = contentMapper.selectByPrimaryKey(id);
-        String result;
         if (!ObjectUtils.isEmpty(content)) {
-            result = content.getContent();
+            return content.getContent();
         } else {
-            result = "";
             LOG.error("id为 {} 的文档content为空！", id);
+            return "";
         }
-        return result;
     }
 }
