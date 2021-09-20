@@ -188,7 +188,7 @@ export default defineComponent({
           console.log("树形结构：", level1);
 
           // 父文档下拉框初始化，相当于点击新增
-          treeSelectData.value = Tool.copy(level1.value);
+          treeSelectData.value = Tool.copy(level1.value) || [];
           // 为选择树添加一个"无"
           treeSelectData.value.unshift({id: 0, name: '无'});
         } else {
@@ -317,7 +317,7 @@ export default defineComponent({
       handleQueryContent();
 
       // 不能选择当前节点及其所有子孙节点，作为父节点，会使树断开
-      treeSelectData.value = Tool.copy(level1.value);
+      treeSelectData.value = Tool.copy(level1.value) || [];
       setDisable(treeSelectData.value, record.id);
 
       // 为选择树添加一个"无"
