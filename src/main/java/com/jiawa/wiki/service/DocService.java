@@ -39,8 +39,9 @@ public class DocService {
     /**
      * 查询文档基本信息
      */
-    public List<DocQueryResp> all() {
+    public List<DocQueryResp> all(Long ebookId) {
         DocExample docExample = new DocExample();
+        docExample.createCriteria().andEbookIdEqualTo(ebookId);
         docExample.setOrderByClause("sort asc");
         List<Doc> docList = docMapper.selectByExample(docExample);
 
