@@ -1,4 +1,4 @@
-# 电子书表
+-- 电子书表
 drop table if exists `ebook`;
 create table `ebook`
 (
@@ -26,6 +26,8 @@ values (4, 'Mysql 入门教程', '零基础入门 Mysql 开发，企业级应用
 insert into `ebook` (id, name, description)
 values (5, 'Oracle 入门教程', '零基础入门 Oracle 开发，企业级应用开发最佳首选框架');
 
+
+-- 测试表
 drop table if exists `test`;
 create table `test`
 (
@@ -39,7 +41,8 @@ create table `test`
 insert into `test` (id, name, password)
 values (1, '测试', 'password');
 
-# 分类
+
+-- 文档分类表
 drop table if exists `category`;
 create table `category`
 (
@@ -82,6 +85,7 @@ values (502, 500, '开发工具', 502);
 insert into `category` (id, parent, name, sort)
 values (503, 500, '热门服务端语言', 503);
 
+
 -- 文档表
 drop table if exists `doc`;
 create table `doc`
@@ -110,6 +114,7 @@ values (5, 1, 3, '文档2.2', 2, 0, 0);
 insert into `doc` (id, ebook_id, parent, name, sort, view_count, vote_count)
 values (6, 1, 5, '文档2.2.1', 1, 0, 0);
 
+
 -- 文档内容
 drop table if exists `content`;
 create table `content`
@@ -119,6 +124,7 @@ create table `content`
     primary key (`id`)
 ) engine = innodb
   default charset = utf8mb4 comment ='文档内容';
+
 
 -- 用户表
 drop table if exists `user`;
@@ -133,6 +139,11 @@ create table `user`
 ) engine = innodb
   default charset = utf8mb4 comment ='用户';
 
+insert into `user` (id, `login_name`, `name`, `password`)
+values (1, 'test', '测试', 'test');
+
+
+-- demo表
 drop table if exists `demo`;
 create table `demo`
 (
