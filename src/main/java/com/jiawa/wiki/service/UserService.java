@@ -132,6 +132,7 @@ public class UserService {
                 return userLoginResp;
             } else {
                 // 密码不对
+                // TODO:这里可以加个功能：密码输错5次就锁定用户
                 LOG.info("密码不对, 输入密码：{}, 数据库密码：{}", req.getPassword(), userDb.getPassword());
                 throw new BusinessException(BusinessExceptionCode.LOGIN_USER_ERROR);
             }
