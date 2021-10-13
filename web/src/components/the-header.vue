@@ -46,7 +46,11 @@
         :confirm-loading="loginModalLoading"
         @ok="login"
     >
-      <a-form :model="loginUser" :label-col="{ span: 6 }" :wrapper-col="{ span: 18 }">
+      <a-form
+          :model="loginUser"
+          :label-col="{ span: 6 }"
+          :wrapper-col="{ span: 18 }"
+      >
         <a-form-item label="登录名">
           <a-input v-model:value="loginUser.loginName"/>
         </a-form-item>

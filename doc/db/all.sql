@@ -140,7 +140,7 @@ create table `user`
   default charset = utf8mb4 comment ='用户';
 
 insert into `user` (id, `login_name`, `name`, `password`)
-values (1, 'test', '测试', 'test');
+values (1, 'test', '测试', '7354a1d413535a6c0dc5c209e198d799');
 
 
 -- demo表
