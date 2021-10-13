@@ -141,6 +141,7 @@ export default defineComponent({
           .then(() => {
             console.log("开始登录");
             loginModalLoading.value = true;
+            const formPassword = loginUser.password;
             loginUser.password = hexMd5(loginUser.password + KEY);
             axios.post('/user/login', loginUser).then((response) => {
               loginModalLoading.value = false;
@@ -150,6 +151,7 @@ export default defineComponent({
                 message.success("登录成功！");
                 store.commit("setUser", data.content);
               } else {
+                loginUser.password = formPassword;
                 message.error(data.message);
               }
             });
