@@ -2,8 +2,10 @@ package com.jiawa.wiki.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jiawa.wiki.domain.DocExample;
 import com.jiawa.wiki.domain.Ebook;
 import com.jiawa.wiki.domain.EbookExample;
+import com.jiawa.wiki.mapper.DocMapper;
 import com.jiawa.wiki.mapper.EbookMapper;
 import com.jiawa.wiki.req.EbookQueryReq;
 import com.jiawa.wiki.req.EbookSaveReq;
@@ -26,6 +28,9 @@ public class EbookService {
 
     @Resource
     private EbookMapper ebookMapper;
+
+    @Resource
+    private DocMapper docMapper;
 
     @Resource
     private SnowFlake snowFlake;
@@ -91,6 +96,12 @@ public class EbookService {
      * 删除
      */
     public void delete(Long id) {
+        // 删除电子书前先删除其关联的所有文档
+        DocExample docExample = new DocExample();
+        DocExample.Criteria criteria = docExample.createCriteria();
+        criteria.andEbookIdEqualTo(id);
+        docMapper.deleteByExample(docExample);
+
         ebookMapper.deleteByPrimaryKey(id);
     }
 }
