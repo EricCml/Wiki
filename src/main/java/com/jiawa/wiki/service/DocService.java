@@ -167,4 +167,11 @@ public class DocService {
             throw new BusinessException(BusinessExceptionCode.VOTE_REPEATED);
         }
     }
+
+    /**
+     * 电子书信息更新
+     */
+    public void updateEbookInfo() {
+        docMapperCust.updateEbookInfo();
+    }
 }
