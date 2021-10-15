@@ -7,12 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 // 扫描多个包
 // @ComponentScan({"com.jiawa", "com.test"})
 @ComponentScan("com.jiawa")
 @SpringBootApplication
 @MapperScan("com.jiawa.wiki.mapper")
+@EnableScheduling
 public class WikiApplication {
 
     private static final Logger LOG = LoggerFactory.getLogger(WikiApplication.class);
