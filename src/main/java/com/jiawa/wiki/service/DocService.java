@@ -116,7 +116,7 @@ public class DocService {
         if (ObjectUtils.isEmpty(req.getId())) {
             // 新增
             doc.setId(snowFlake.nextId());
-            docMapper.insertSelective(doc);
+            docMapper.insert(doc);
 
             content.setId(doc.getId());
             contentMapper.insert(content);
