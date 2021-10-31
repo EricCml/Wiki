@@ -50,4 +50,15 @@
         order by t1.`date` asc;
     </select>
 
+    <!-- 获取30天数值统计 -->
+    <select id="get30Statistic" resultType="com.jiawa.wiki.resp.StatisticResp">
+        select t1.`date`             as `date`,
+               sum(t1.view_increase) as viewIncrease,
+               sum(t1.vote_increase) as voteIncrease
+        from ebook_snapshot t1
+        where t1.`date` between date_sub(curdate(), interval 30 day) and date_sub(curdate(), interval 1 day)
+        group by t1.`date`
+        order by t1.`date` asc;
+    </select>
+
 </mapper>
