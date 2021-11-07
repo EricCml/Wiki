@@ -64,7 +64,7 @@ public class TestController {
 
     @RequestMapping("/redis/get/{key}")
     public Object get(@PathVariable Long key) {
-        Object object = redisTemplate.opsForValue().get(key);
+        Object object = redisTemplate.opsForValue().get(key.toString());
         LOG.info("key: {}, value: {}", key, object);
         return object;
     }
