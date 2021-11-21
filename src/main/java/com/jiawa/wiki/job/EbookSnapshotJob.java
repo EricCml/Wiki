@@ -25,7 +25,7 @@ public class EbookSnapshotJob {
      * 只有等上一次执行完成，下一次才会在下一个时间点执行，错过就错过
      * 每天的凌晨2点触发
      */
-    @Scheduled(cron = "0 0 2 * * ? *")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void doSnapshot() {
         // 增加日志流水号
         MDC.put("LOG_ID", String.valueOf(snowFlake.nextId()));
