@@ -23,7 +23,7 @@ public class EbookSnapshotJob {
     /**
      * 自定义cron表达式跑批
      * 只有等上一次执行完成，下一次才会在下一个时间点执行，错过就错过
-     * 每天的凌晨2点触发
+     * 快照统计时间为1分钟一次
      */
     @Scheduled(cron = "0 0/1 * * * ?")
     public void doSnapshot() {

@@ -1,5 +1,12 @@
 <template>
   <div>
+    <a-alert
+        class="tip"
+        message="小提示：统计数据有一分钟左右延时"
+        type="info"
+        closable
+    />
+
     <a-row>
       <a-col :span="24">
         <a-card>
@@ -247,3 +254,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.tip {
+  margin-bottom: 20px;
+}
+</style>
