@@ -137,6 +137,13 @@ export default defineComponent({
     };
 
     const init30DayEcharts = (list: any) => {
+      // 发布生产后出现问题：切到别的页面，再切回首页，报表显示不出来
+      // 解决方法：把原来的id=main的区域清空，重新初始化
+      const mainDom = document.getElementById('main-col');
+      if (mainDom) {
+        mainDom.innerHTML = '<div id="main" style="width: 100%;height:300px;"></div>';
+      }
+
       // 基于准备好的dom，初始化echarts实例
       const myChart = echarts.init(document.getElementById('main'));
 
