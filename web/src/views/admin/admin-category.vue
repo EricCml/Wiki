@@ -17,6 +17,14 @@
           </a-form-item>
         </a-form>
       </p>
+      <p>
+        <a-alert
+            class="tip"
+            message="小提示：这里的分类会显示到首页的侧边菜单"
+            type="info"
+            closable
+        />
+      </p>
       <a-table
           :columns="columns"
           :row-key="record => record.id"
@@ -198,7 +206,7 @@ export default defineComponent({
         if (data.success) {
           // 重新加载列表
           handleQuery();
-        }else {
+        } else {
           message.error(data.message);
         }
       });
