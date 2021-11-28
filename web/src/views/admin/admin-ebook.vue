@@ -76,7 +76,7 @@
             list-type="picture-card"
             class="avatar-uploader"
             :show-upload-list="false"
-            action="http://127.0.0.1:8880/ebook/upload/avatar"
+            :action="SERVER + '/ebook/upload/avatar'"
             :before-upload="beforeUpload"
             @change="handleChange"
         >
@@ -307,6 +307,7 @@ export default defineComponent({
       return result;
     };
 
+    const SERVER = process.env.VUE_APP_SERVER;
     const fileList = ref([]);
     const coverLoading = ref<boolean>(false);
     const imageUrl = ref<string>('');
@@ -323,7 +324,7 @@ export default defineComponent({
           coverLoading.value = false;
         });
 
-        ebook.value.cover = "/file/" + info.file.name;
+        ebook.value.cover = SERVER + "/file/" + info.file.name;
       }
       if (info.file.status === 'error') {
         coverLoading.value = false;
@@ -374,6 +375,7 @@ export default defineComponent({
       imageUrl,
       handleChange,
       beforeUpload,
+      SERVER
     }
   }
 });
