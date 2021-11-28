@@ -30,7 +30,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/doc/all/**",
                         "/doc/find-content/**",
                         "/doc/vote/**",
-                        "/ebook-snapshot/**"
+                        "/ebook-snapshot/**",
+                        "/ebook/upload/avatar"
                 );
 
         // 拦截非管理员用户
