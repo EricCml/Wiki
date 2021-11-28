@@ -362,6 +362,8 @@ export default defineComponent({
             if (data.success) {
               // 重新加载列表
               handleQuery();
+            } else {
+              message.error(data.message);
             }
           });
         },

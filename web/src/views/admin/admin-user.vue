@@ -213,6 +213,9 @@ export default defineComponent({
       user.value = {};
     };
 
+    /**
+     * 删除
+     */
     const handleDelete = (id: number) => {
       axios.delete("/user/delete/" + id).then((response) => {
         const data = response.data; // data = commonResp
@@ -222,6 +225,8 @@ export default defineComponent({
             page: pagination.value.current,
             size: pagination.value.pageSize,
           });
+        } else {
+          message.error(data.message);
         }
       });
     };
