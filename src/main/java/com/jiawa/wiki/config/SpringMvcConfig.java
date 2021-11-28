@@ -18,6 +18,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     ActionInterceptor actionInterceptor;
 
     public void addInterceptors(InterceptorRegistry registry) {
+        // 拦截未登录用户
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
@@ -32,6 +33,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/ebook-snapshot/**"
                 );
 
+        // 拦截非管理员用户
         registry.addInterceptor(actionInterceptor)
                 .addPathPatterns(
                         "/*/save",
