@@ -4,6 +4,7 @@ import com.jiawa.wiki.interceptor.ActionInterceptor;
 import com.jiawa.wiki.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
@@ -31,7 +32,8 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/doc/find-content/**",
                         "/doc/vote/**",
                         "/ebook-snapshot/**",
-                        "/ebook/upload/avatar"
+                        "/ebook/upload/avatar",
+                        "/file/**"
                 );
 
         // 拦截非管理员用户
@@ -40,5 +42,10 @@ public class SpringMvcConfig implements WebMvcConfigurer {
                         "/*/save",
                         "/*/delete/**",
                         "/*/reset-password");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/file/**").addResourceLocations("file:F:/Program/JavaProjects/SpringProjects/wiki/web/dist/image/");
     }
 }
