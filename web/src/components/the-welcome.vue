@@ -26,7 +26,7 @@
               </a-statistic>
             </a-col>
             <a-col :span="8">
-              <a-statistic title="点赞率" :value="statistic.voteCount / statistic.viewCount * 100"
+              <a-statistic title="点赞率" :value="statistic.voteCountRate"
                            :precision="2"
                            suffix="%"
                            :value-style="{ color: '#cf1322' }">
@@ -124,13 +124,25 @@ export default defineComponent({
           statistic.value.todayViewCount = statisticResp[1].viewIncrease;
           statistic.value.todayVoteCount = statisticResp[1].voteIncrease;
 
+          // 点赞率
+          if (statistic.value.viewCount != 0) {
+            statistic.value.voteCountRate = statistic.value.voteCount / statistic.value.viewCount * 100;
+          } else {
+            statistic.value.voteCount = 0;
+          }
+
           // 按分钟计算当前时间点，占一天的百分比
           const now = new Date();
           const nowRate = (now.getHours() * 60 + now.getMinutes()) / (60 * 24);
           // console.log(nowRate)
           statistic.value.todayViewIncrease = parseInt(String(statisticResp[1].viewIncrease / nowRate));
+
           // todayViewIncreaseRate：今日预计增长率
-          statistic.value.todayViewIncreaseRate = (statistic.value.todayViewIncrease - statisticResp[0].viewIncrease) / statisticResp[0].viewIncrease * 100;
+          if (statisticResp[0].viewIncrease != 0) {
+            statistic.value.todayViewIncreaseRate = (statistic.value.todayViewIncrease - statisticResp[0].viewIncrease) / statisticResp[0].viewIncrease * 100;
+          } else {
+            statistic.value.todayViewIncreaseRate = 0;
+          }
           statistic.value.todayViewIncreaseRateAbs = Math.abs(statistic.value.todayViewIncreaseRate);
         }
       });
