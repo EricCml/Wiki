@@ -96,7 +96,7 @@
     </a-row>
     <br>
     <a-row>
-      <a-col :span="24">
+      <a-col :span="24" id="main-col">
         <div id="main" style="width: 100%;height:300px;"></div>
       </a-col>
     </a-row>
