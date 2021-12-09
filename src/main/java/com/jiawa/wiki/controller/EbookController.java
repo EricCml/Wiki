@@ -59,7 +59,7 @@ public class EbookController {
 
         // 保存文件到本地
         String fileName = avatar.getOriginalFilename();
-        String fullPath = "F:/Program/JavaProjects/SpringProjects/wiki/web/dist/image/" + fileName;
+        String fullPath = "F:/Program/JavaProjects/SpringProjects/wiki/doc/image/cover-logo/" + fileName;
         File dest = new File(fullPath);
         avatar.transferTo(dest);
         LOG.info(dest.getAbsolutePath());
