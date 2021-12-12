@@ -1,6 +1,6 @@
 <template>
   <a-layout-footer style="text-align: center">
-    甲蛙电子书<span v-show="user.id">，欢迎：{{ user.name }}</span>
+    边城知识库<span v-show="user.id">，欢迎：{{ user.name }}</span>
     <br>
     ICP证 : <a href="https://beian.miit.gov.cn/" target="_blank">湘ICP备2021019370号-1</a>
     <br>

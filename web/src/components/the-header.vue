@@ -1,6 +1,6 @@
 <template>
   <a-layout-header class="header">
-    <div class="logo">边城小菜</div>
+    <div class="logo">边城知识库</div>
     <a class="login-menu" v-show="!user.id" @click="showLoginModal">
       <span>登录</span>
     </a>
