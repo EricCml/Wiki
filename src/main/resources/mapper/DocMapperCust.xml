@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jiawa.wiki.mapper.DocMapperCust" >
+<mapper namespace="com.jiawa.wiki.mapper.DocMapperCust">
 
     <update id="increaseViewCount">
-        update doc set view_count = view_count + 1 where id = #{id}
+        update doc
+        set view_count = view_count + 1
+        where id = #{id}
     </update>
 
     <update id="increaseVoteCount">
-        update doc set vote_count = vote_count + 1 where id = #{id}
+        update doc
+        set vote_count = vote_count + 1
+        where id = #{id}
     </update>
 
     <update id="updateEbookInfo">
-        update ebook t1, (select ebook_id, count(1) doc_count, sum(view_count) view_count, sum(vote_count) vote_count from doc group by ebook_id) t2
-        set t1.doc_count = t2.doc_count, t1.view_count = t2.view_count, t1.vote_count = t2.vote_count
-        where t1.id = t2.ebook_id
+        update ebook t1, (select ebook_id, count(1) doc_count, sum(view_count) view_count, sum(vote_count) vote_count
+            from doc
+            group by ebook_id) t2
+        set t1.doc_count = t2.doc_count,
+            t1.view_count = t2.view_count,
+            t1.vote_count = t2.vote_count
+        where t1.id = t2.ebook_id;
+        -- 增加逻辑：电子书数据更新时，如果找不到文档表里对应ebook_id的数据，则将文档数更新为0，并且阅读数和点赞数不变
+        update ebook
+        set doc_count = 0
+        where id not in (select ebook_id from doc);
     </update>
 
 </mapper>
