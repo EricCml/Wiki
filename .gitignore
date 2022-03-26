@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Production Configuration ###
+src/main/resources/application-prod.properties
+
 ### STS ###
 .apt_generated
 .classpath
